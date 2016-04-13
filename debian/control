@@ -1,0 +1,14 @@
+Source: netrunner-plasma5-shells
+Section: admin
+Priority: optional
+Maintainer: Leszek Lesner <leszek@zevenos.com>
+Build-Depends: debhelper (>= 5)
+Standards-Version: 3.7.2
+
+Package: netrunner-plasma5-shells
+Architecture: all
+Conflicts: kubuntu-settings-desktop
+Replaces: netrunner-default-settings (<< 1.6.1)
+Breaks: netrunner-default-settings (<< 1.6.1)
+Description: Plasma 5 Shells
+  This package provides the plasma 5 shells for Netrunner.
