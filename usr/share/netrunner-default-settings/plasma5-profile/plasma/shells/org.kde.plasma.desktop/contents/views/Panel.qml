@@ -130,14 +130,11 @@ PlasmaCore.FrameSvgItem {
                 return;
             }
 
-            var wantedSize;
-
             if (containment.formFactor === PlasmaCore.Types.Vertical) {
-                wantedSize = Math.max(containment.Layout.minimumHeight, Math.min(containment.Layout.preferredHeight, containment.Layout.maximumHeight));
+                panel.length = containment.Layout.preferredHeight
             } else {
-                wantedSize = Math.max(containment.Layout.minimumWidth, Math.min(containment.Layout.preferredWidth, containment.Layout.maximumWidth));
+                panel.length = containment.Layout.preferredWidth
             }
-            panel.length = Math.max(panel.minimumLength, Math.min(wantedSize, panel.maximumLength));
         }
     }
 
@@ -145,12 +142,12 @@ PlasmaCore.FrameSvgItem {
         id: containmentParent
         anchors {
             fill: parent
-            topMargin: Math.min(root.fixedMargins.top, Math.max(1, (veticalPanel ? root.width : root.height) - units.iconSizes.smallMedium));
-            bottomMargin: Math.min(root.fixedMargins.bottom, Math.max(1, (veticalPanel ? root.width : root.height) - units.iconSizes.smallMedium));
+            topMargin: Math.round(Math.min(root.fixedMargins.top, Math.max(1, (veticalPanel ? root.width : root.height) - units.iconSizes.smallMedium - units.smallSpacing*2)/2));
+            bottomMargin: Math.round(Math.min(root.fixedMargins.bottom, Math.max(1, (veticalPanel ? root.width : root.height) - units.iconSizes.smallMedium - units.smallSpacing*2)/2));
 
             //Base the left/right fixedMargins on height as well, to have a good radial symmetry
-            leftMargin: Math.min(root.fixedMargins.left, Math.max(1, (veticalPanel ? root.width : root.height) - units.iconSizes.smallMedium));
-            rightMargin: Math.min(root.fixedMargins.right, Math.max(1, (veticalPanel ? root.width : root.height) - units.iconSizes.smallMedium));
+            leftMargin: Math.round(Math.min(root.fixedMargins.left, Math.max(1, (veticalPanel ? root.width : root.height) - units.iconSizes.smallMedium - units.smallSpacing*2)/2));
+            rightMargin: Math.round(Math.min(root.fixedMargins.right, Math.max(1, (veticalPanel ? root.width : root.height) - units.iconSizes.smallMedium - units.smallSpacing*2)/2));
         }
     }
 

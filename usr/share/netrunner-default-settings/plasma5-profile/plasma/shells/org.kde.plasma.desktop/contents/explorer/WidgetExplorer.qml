@@ -24,6 +24,7 @@ import org.kde.plasma.components 2.0 as PlasmaComponents
 import org.kde.plasma.core 2.0 as PlasmaCore
 import org.kde.plasma.extras 2.0 as PlasmaExtras
 import org.kde.kquickcontrolsaddons 2.0
+import org.kde.kwindowsystem 1.0
 
 import QtQuick.Window 2.1
 import QtQuick.Layouts 1.1
@@ -33,8 +34,10 @@ import org.kde.plasma.private.shell 2.0
 Item {
     id: main
 
-    width: Math.max(heading.paintedWidth, units.iconSizes.enormous * 2 + units.smallSpacing * 4 + 20)
+    width: Math.max(heading.paintedWidth, units.iconSizes.enormous * 2 + units.smallSpacing * 4 + units.gridUnit * 2)
     height: 800//Screen.height
+
+    opacity: draggingWidget ? 0.3 : 1
 
     property QtObject containment
 
@@ -42,11 +45,22 @@ Item {
     //therefore get deleted whilst we are still in a drag exec()
     //this is a clue to the owning dialog that hideOnWindowDeactivate should be deleted
     //See https://bugs.kde.org/show_bug.cgi?id=332733
-    property bool preventWindowHide: false
+    property bool preventWindowHide: draggingWidget || categoriesDialog.status !== PlasmaComponents.DialogStatus.Closed
+                                  || getWidgetsDialog.status !== PlasmaComponents.DialogStatus.Closed
+
+    property bool outputOnly: draggingWidget
 
     property Item categoryButton
 
+    property bool draggingWidget: false
+
     signal closed()
+
+    onVisibleChanged: {
+        if (!visible) {
+            kwindowsystem.showingDesktop = false
+        }
+    }
 
     Component.onCompleted: {
         if (!root.widgetExplorer) {
@@ -72,6 +86,10 @@ Item {
         if (pluginName) {
             widgetExplorer.addApplet(pluginName)
         }
+    }
+
+    KWindowSystem {
+        id: kwindowsystem
     }
 
     Action {
@@ -125,13 +143,6 @@ Item {
             widgetExplorer.widgetsModel.filterQuery = model.filterData
             widgetExplorer.widgetsModel.filterType = model.filterType
         }
-        onStatusChanged: {
-            if (status == PlasmaComponents.DialogStatus.Opening) {
-                main.preventWindowHide = true;
-            } else if (status == PlasmaComponents.DialogStatus.Closed) {
-                main.preventWindowHide = false;
-            }
-        }
     }
 
     PlasmaComponents.ModelContextMenu {
@@ -139,13 +150,6 @@ Item {
         visualParent: getWidgetsButton
         // model set on first invocation
         onClicked: model.trigger()
-        onStatusChanged: {
-            if (status == PlasmaComponents.DialogStatus.Opening) {
-                main.preventWindowHide = true;
-            } else if (status == PlasmaComponents.DialogStatus.Closed) {
-                main.preventWindowHide = false;
-            }
-        }
     }
     /*
     PlasmaCore.Dialog {
@@ -197,9 +201,6 @@ Item {
             top: parent.top
             left: parent.left
             right: parent.right
-            topMargin: 0
-            leftMargin: units.smallSpacing
-            rightMargin: units.smallSpacing
         }
         columns: 2
 
@@ -237,7 +238,6 @@ Item {
             id: categoryButton
             text: i18nd("plasma_shell_org.kde.plasma.desktop", "Categories")
             onClicked: {
-                main.preventWindowHide = true;
                 categoriesDialog.model = widgetExplorer.filterModel
                 categoriesDialog.open(0, categoryButton.height)
             }
@@ -260,7 +260,6 @@ Item {
             right: parent.right
             bottom: bottomBar.top
             topMargin: units.smallSpacing
-            leftMargin: units.smallSpacing
             bottomMargin: units.smallSpacing
         }
 
@@ -280,7 +279,7 @@ Item {
 
             activeFocusOnTab: true
             keyNavigationWraps: true
-            cellWidth: width / 2
+            cellWidth: (width - units.smallSpacing) / 2
             cellHeight: cellWidth + units.gridUnit * 4 + units.smallSpacing * 2
 
             delegate: AppletDelegate {}
@@ -329,9 +328,6 @@ Item {
             left: parent.left
             right: parent.right
             bottom: parent.bottom
-            leftMargin: units.smallSpacing
-            rightMargin: units.smallSpacing
-            bottomMargin: units.smallSpacing
         }
 
         spacing: units.smallSpacing
@@ -345,12 +341,12 @@ Item {
             iconSource: "get-hot-new-stuff"
             text: i18nd("plasma_shell_org.kde.plasma.desktop", "Get new widgets")
             onClicked: {
-                main.preventWindowHide = true;
                 getWidgetsDialog.model = widgetExplorer.widgetsMenuActions
                 getWidgetsDialog.open()
             }
         }
 
+        /* TODO: WidgetExplorer.extraActions is unimplemented
         Repeater {
             model: widgetExplorer.extraActions.length
 
@@ -364,6 +360,7 @@ Item {
                 onClicked: widgetExplorer.extraActions[modelData].trigger()
             }
         }
+        */
     }
 }
 

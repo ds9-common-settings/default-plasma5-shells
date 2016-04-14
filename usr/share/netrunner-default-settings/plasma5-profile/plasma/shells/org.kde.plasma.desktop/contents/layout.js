@@ -46,7 +46,7 @@ gc();
 //loadTemplate("org.kde.plasma-desktop.sidebarPanel");
 
 for (var i = 0; i < screenCount; ++i) {
-    var id = createActivity("Netrunner Desktop", "org.kde.netrunnerdesktop")
+    var id = createActivity("Netrunner Desktop", "org.kde.plasma.folder")
     var desktopsArray = desktopsForActivity(id);
     
     for (var j = 0; j < desktopsArray.length; j++) {
@@ -62,7 +62,7 @@ for (var i = 0; i < screenCount; ++i) {
         desktopsArray[j].writeConfig("sortMode","-1");
 //         [Containments][18][Wallpaper][org.kde.image][General]
         desktopsArray[j].currentConfigGroup = new Array("Wallpaper", "org.kde.image", "General");
-        desktopsArray[j].writeConfig("Image", "file:///usr/share/wallpapers/wallpapers-17/0. Netrunner 17 Horizon.png");
+        desktopsArray[j].writeConfig("Image", "file:///usr/share/wallpapers/Flux.png");
         desktopsArray[j].writeConfig("FillMode","2");
     }
 }

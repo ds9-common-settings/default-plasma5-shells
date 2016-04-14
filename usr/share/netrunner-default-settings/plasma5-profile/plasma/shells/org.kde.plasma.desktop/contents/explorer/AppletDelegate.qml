@@ -25,7 +25,6 @@ import org.kde.plasma.components 2.0 as PlasmaComponents
 import org.kde.plasma.extras 2.0 as PlasmaExtras
 import org.kde.plasma.core 2.0 as PlasmaCore
 import org.kde.draganddrop 2.0
-import org.kde.kquickcontrolsaddons 2.0
 
 Item {
     id: delegate
@@ -48,10 +47,11 @@ Item {
         Component.onCompleted: mimeData.setData("text/x-plasmoidservicename", pluginName)
 
         onDragStarted: {
-            main.preventWindowHide = true;
+            kwindowsystem.showingDesktop = true;
+            main.draggingWidget = true;
         }
         onDrop: {
-            main.preventWindowHide = false;
+            main.draggingWidget = false;
         }
 
         MouseArea {
@@ -95,9 +95,9 @@ Item {
                 Item {
                     id: iconWidget
                     anchors.fill: parent
-                    QIconItem {
+                    PlasmaCore.IconItem {
                         anchors.fill: parent
-                        icon: model.decoration
+                        source: model.decoration
                         visible: model.screenshot == ""
                     }
                     Image {
