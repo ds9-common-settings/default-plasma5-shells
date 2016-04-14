@@ -165,8 +165,7 @@ Rectangle {
                 frameVisible: true
                 Layout.fillHeight: true
                 visible: (configDialog.configModel ? configDialog.configModel.count : 0) + globalConfigModel.count > 1
-                width: visible ? units.gridUnit * 7 : 0
-                implicitWidth: width
+                Layout.preferredWidth: units.gridUnit * 7
                 flickableItem.interactive: false
 
                 Rectangle {
@@ -309,9 +308,9 @@ Rectangle {
             onTriggered: {
                 if (main.currentItem.saveConfig !== undefined) {
                     main.currentItem.saveConfig();
-                } else {
-                    root.saveConfig();
                 }
+
+                root.saveConfig();
 
                 applyButton.enabled = false;
             }
