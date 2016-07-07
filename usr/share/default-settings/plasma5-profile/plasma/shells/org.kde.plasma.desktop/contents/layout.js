@@ -51,6 +51,7 @@ for (var i = 0; i < screenCount; ++i) {
     
     for (var j = 0; j < desktopsArray.length; j++) {
         desktopsArray[j].wallpaperPlugin = 'org.kde.image'
+	desktopsArray[j].activityId = '49442035-8f68-4d86-94f9-17d0c6a8e2eb' 
         desktopsArray[j].wallpaperMode = 'SingleImage'
 
         desktopsArray[j].currentConfigGroup = new Array("General");
