@@ -51,7 +51,6 @@ for (var i = 0; i < screenCount; ++i) {
     
     for (var j = 0; j < desktopsArray.length; j++) {
         desktopsArray[j].wallpaperPlugin = 'org.kde.image'
-	desktopsArray[j].activityId = '49442035-8f68-4d86-94f9-17d0c6a8e2eb' 
         desktopsArray[j].wallpaperMode = 'SingleImage'
 
         desktopsArray[j].currentConfigGroup = new Array("General");
@@ -63,7 +62,7 @@ for (var i = 0; i < screenCount; ++i) {
         desktopsArray[j].writeConfig("sortMode","-1");
 //         [Containments][18][Wallpaper][org.kde.image][General]
         desktopsArray[j].currentConfigGroup = new Array("Wallpaper", "org.kde.image", "General");
-        desktopsArray[j].writeConfig("Image", "file:///usr/share/wallpapers/Next/contents/images/1600x1200.png");
+        desktopsArray[j].writeConfig("Image", "file:///usr/share/default-settings/default-wallpaper.png");
         desktopsArray[j].writeConfig("FillMode","2");
     }
 }
