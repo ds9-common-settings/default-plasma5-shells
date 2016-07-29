@@ -1,16 +1,6 @@
 
 loadTemplate("org.kde.plasma.desktop.defaultPanel")
 
-// for (var i = 0; i < screenCount; ++i) {
-//     var id = createActivity("Desktop");
-//     var desktopsArray = desktopsForActivity(id);
-//     print(desktopsArray.length);
-//     for( var j = 0; j < desktopsArray.length; j++) {
-//         desktopsArray[j].wallpaperPlugin = 'org.kde.image';
-//         //var clock = desktopsArray[j].addWidget("org.kde.plasma.analogclock");
-//     }
-// }
-
 var actionPlugins = ConfigFile("plasma-org.kde.plasma.desktop-appletsrc", "ActionPlugins");
 
 var actionPluginsDesktop = ConfigFile(actionPlugins,"0");
@@ -42,27 +32,23 @@ delete actionPluginsDesktop;
 delete actionPlugins;
 gc(); 
 
-//loadTemplate("org.kde.plasma-desktop.defaultPanel");
-//loadTemplate("org.kde.plasma-desktop.sidebarPanel");
+var id = createActivity("Default Desktop", "org.kde.plasma.folder")
+var desktopsArray = desktopsForActivity(id);
 
-for (var i = 0; i < screenCount; ++i) {
-    var id = createActivity("Default Desktop", "org.kde.plasma.folder")
-    var desktopsArray = desktopsForActivity(id);
-    
-    for (var j = 0; j < desktopsArray.length; j++) {
-        desktopsArray[j].wallpaperPlugin = 'org.kde.image'
-        desktopsArray[j].wallpaperMode = 'SingleImage'
-
-        desktopsArray[j].currentConfigGroup = new Array("General");
-        desktopsArray[j].writeConfig("positions","1,7,desktop:/mycomputer.desktop,0,0,desktop:/Network,0,1,desktop:/welcome.desktop,0,2,desktop:/calamares.desktop,0,3")
-        desktopsArray[j].writeConfig("pressToMove",true);
-        desktopsArray[j].writeConfig("showToolbox",false);
-        desktopsArray[j].writeConfig("popups",false);
-        desktopsArray[j].writeConfig("selectionMarkers",false);
-        desktopsArray[j].writeConfig("sortMode","-1");
-//         [Containments][18][Wallpaper][org.kde.image][General]
-        desktopsArray[j].currentConfigGroup = new Array("Wallpaper", "org.kde.image", "General");
-        desktopsArray[j].writeConfig("Image", "file:///usr/share/default-settings/default-wallpaper.png");
-        desktopsArray[j].writeConfig("FillMode","2");
-    }
+for (var j = 0; j < desktopsArray.length; j++) {
+  desktopsArray[j].wallpaperPlugin = 'org.kde.image'
+  desktopsArray[j].wallpaperMode = 'SingleImage'
+  
+  desktopsArray[j].currentConfigGroup = new Array("General");
+  desktopsArray[j].writeConfig("positions","1,7,desktop:/mycomputer.desktop,0,0,desktop:/Network,0,1,desktop:/welcome.desktop,0,2,desktop:/calamares.desktop,0,3")
+  desktopsArray[j].writeConfig("pressToMove",true);
+  desktopsArray[j].writeConfig("showToolbox",false);
+  desktopsArray[j].writeConfig("popups",false);
+  desktopsArray[j].writeConfig("selectionMarkers",false);
+  desktopsArray[j].writeConfig("sortMode","-1");
+  //         [Containments][18][Wallpaper][org.kde.image][General]
+  desktopsArray[j].currentConfigGroup = new Array("Wallpaper", "org.kde.image", "General");
+  desktopsArray[j].writeConfig("Image", "file:///usr/share/default-settings/default-wallpaper.png");
+  desktopsArray[j].writeConfig("FillMode","2");
 }
+

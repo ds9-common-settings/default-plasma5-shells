@@ -1,11 +1,11 @@
-Source: default-plasma5-shells
+Source: maui-plasma5-shells
 Section: admin
 Priority: optional
 Maintainer: Leszek Lesner <leszek@zevenos.com>
 Build-Depends: debhelper (>= 5)
 Standards-Version: 3.7.2
 
-Package: default-plasma5-shells
+Package: maui-plasma5-shells
 Architecture: all
 Conflicts: kubuntu-settings-desktop
 Replaces: netrunner-default-settings (<< 1.6.1)
