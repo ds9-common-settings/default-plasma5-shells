@@ -1,7 +1,5 @@
-[Desktop]
-Containment=org.kde.desktopcontainment
-ToolBox=org.kde.desktoptoolbox
-RuntimePlatform=Desktop
+[Desktop][org.kde.plasma.desktop]
+Containment=org.kde.plasma.folder
 
 [Desktop][ContainmentActions]
 RightButton;NoModifier=org.kde.contextmenu
